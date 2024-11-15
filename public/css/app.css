@@ -1,0 +1,99 @@
+/* Sidebar Styling */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Lebar sidebar saat terbuka */
+    height: 100%;
+    background-color: #2d2d2d;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-x: hidden;
+}
+
+#sidebar.collapsed {
+    width: 80px; /* Lebar sidebar saat ditutup */
+}
+
+/* Menu Items Styling */
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#sidebar ul li:hover {
+    background-color: #4a4a4a;
+}
+
+#sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+#sidebar.collapsed ul li a i {
+    margin-right: 0; /* Hilangkan margin ikon saat sidebar ditutup */
+}
+
+.sidebar-text {
+    transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+#sidebar.collapsed .sidebar-text {
+    opacity: 0;
+    width: 0;
+}
+
+/* Sidebar Toggle Button */
+#sidebar-toggle {
+    position: fixed;
+    top: 20px;
+    left: 260px; /* Posisi saat sidebar terbuka */
+    background-color: #2d2d2d;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    transition: left 0.3s ease-in-out;
+}
+
+#sidebar.collapsed + #sidebar-toggle {
+    left: 90px; /* Posisi saat sidebar tertutup */
+}
+
+#sidebar-toggle:hover {
+    background-color: #444444;
+}
+
+#sidebar-toggle i {
+    font-size: 24px; /* Ukuran ikon toggle */
+}
+
+/* Content Wrapper */
+.main-content {
+    margin-left: 250px; /* Margin untuk sidebar terbuka */
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.sidebar-hidden {
+    margin-left: 80px; /* Margin untuk sidebar tertutup */
+}
