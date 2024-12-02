@@ -1,11 +1,206 @@
+/* Auth styling */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    /* background-color: rgb(0, 155, 59); */
+    background-image: url("../img/2458664.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+a {
+    text-decoration: none;
+    color: var(--second-color);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Box Style for Login and Register */
+.login_box, .register_box {
+    position: relative;
+    width: 450px;
+    backdrop-filter: blur(25px);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 7.5em 2.5em 4em 2.5em;
+    color: var(--second-color);
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Header Style for Login and Register */
+.login-header, .register-header {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    width: 140px;
+    height: 70px;
+    border-radius: 0 0 20px 20px;
+}
+
+.login-header span, .register-header span {
+    font-size: 30px;
+    color: var(--black-color);
+}
+
+.login-header::before, .register-header::before {
+    content: "";
+    top: 0;
+    left: -30%;
+    width: 30px;
+    height: 30px;
+    border-top-right-radius: 50%;
+    background: transparent;
+    box-shadow: 15px 0 0 0 var(--primary-color);
+}
+
+.login-header::after, .register-header::after {
+    content: "";
+    top: 0;
+    right: -30%;
+    width: 30px;
+    height: 30px;
+    border-top-left-radius: 50%;
+    background: transparent;
+    box-shadow: -15px 0 0 0 var(--primary-color);
+}
+
+/* Input Field Styles for Both Forms */
+.input_box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.input-field {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    background: transparent;
+    color: var(--second-color);
+    padding-inline: 20px 50px;
+    border: 2px solid var(white);
+    border-radius: 30px;
+    outline: none;
+}
+
+#user, #reg_user, #reg_email, #pass, #reg_pass {
+    margin-bottom: 15px;
+}
+
+.label {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    transition: .2s;
+}
+
+.input-field:focus ~ .label,
+.input-field:valid ~ .label {
+    position: absolute;
+    top: -30%;
+    left: 20px;
+    font-size: 14px;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+    color: var(--black-color);
+    padding: 0 10px;
+}
+
+.icon {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 20px;
+}
+
+/* Remember Me & Forgot Password Style for Login */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+/* Submit Button Style for Both Forms */
+.input_submit {
+    width: 100%;
+    height: 50px;
+    background: #ececec;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.input_submit:hover {
+    background: var(--second-color);
+}
+
+/* Switch Between Login and Register Links */
+.register, .login {
+    text-align: center;
+}
+
+.register a, .login a {
+    font-weight: 500;
+}
+#registerForm {
+    display: none;
+}
+/* Media Queries for Small Screens */
+@media only screen and (max-width: 564px) {
+    .wrapper {
+        padding: 20px;
+    }
+    .login_box, .register_box {
+        padding: 7.5em 2.5em 4em;
+    }
+}
+
 /* Sidebar Styling */
+.user-greeting {
+    font-size: 16px;
+    color: #f1f1f1;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
 #sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px; /* Lebar sidebar saat terbuka */
+    width: 250px; /* Lebar sidebar desktop */
     height: 100%;
-    background-color: #2d2d2d;
+    background-color: #2f6c2f;
     color: white;
     transition: all 0.3s ease-in-out;
     z-index: 1000;
@@ -13,7 +208,19 @@
 }
 
 #sidebar.collapsed {
-    width: 80px; /* Lebar sidebar saat ditutup */
+    width: 0px; /* Sidebar tersembunyi di ponsel */
+    overflow: hidden;
+
+}
+
+#sidebar.active {
+    width: 250px; /* Lebar sidebar saat aktif */
+}
+
+@media (max-width: 760px) {
+    #sidebar {
+        width: 0; /* Sidebar default tersembunyi di ponsel */
+    }
 }
 
 /* Menu Items Styling */
@@ -29,6 +236,14 @@
     display: flex;
     align-items: center;
     transition: background-color 0.3s ease-in-out;
+    border-bottom: 1px solid #ececec;
+    margin: 0 20px;
+}
+
+
+#sidebar ul li:last-child{
+    border-bottom: none;
+    
 }
 
 #sidebar ul li:hover {
@@ -47,53 +262,224 @@
     font-size: 18px;
 }
 
-#sidebar.collapsed ul li a i {
-    margin-right: 0; /* Hilangkan margin ikon saat sidebar ditutup */
-}
-
-.sidebar-text {
-    transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out;
-    overflow: hidden;
-}
-
-#sidebar.collapsed .sidebar-text {
-    opacity: 0;
-    width: 0;
-}
-
 /* Sidebar Toggle Button */
 #sidebar-toggle {
-    position: fixed;
-    top: 20px;
-    left: 260px; /* Posisi saat sidebar terbuka */
-    background-color: #2d2d2d;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-    transition: left 0.3s ease-in-out;
+    display: none; /* Default tidak terlihat di desktop */
 }
 
-#sidebar.collapsed + #sidebar-toggle {
-    left: 90px; /* Posisi saat sidebar tertutup */
+@media (max-width: 760px) {
+    #sidebar-toggle {
+        display: block; /* Tombol toggle terlihat di ponsel */
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #2d2d2d;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+        transition: left 0.3s ease-in-out;
+    }
+
+    #sidebar.active + #sidebar-toggle {
+        left: 200px; /* Sesuaikan dengan lebar sidebar */
+    }
+
+    #sidebar.active {
+        width: 175px; /* Lebar sidebar di perangkat mobile saat aktif */
+    }
+
+     /* Geser margin konten utama di ponsel */
+     .main-content.shifted {
+        margin-left: 100px;
+    }
 }
 
-#sidebar-toggle:hover {
-    background-color: #444444;
+.logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-#sidebar-toggle i {
-    font-size: 24px; /* Ukuran ikon toggle */
+.containerLogo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+/* Atur tombol logout agar menyerupai tautan */
+.logout-button {
+    background: transparent; 
+    border: none; 
+    padding: 0; 
+    margin: 0; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    cursor: pointer; 
+    text-decoration: none; 
+    font-size: 16px; 
+}
+
+/* Tambahkan efek hover */
+.logout-button:hover {
+    text-decoration: underline; /* Garis bawah saat hover */
+    color: #ff6347; /* Ubah warna teks saat hover (contoh: merah-oranye) */
+}
+
+/* Atur ikon dalam tombol logout */
+.logout-button i {
+    margin-right: 8px; /* Jarak antara ikon dan teks */
+    font-size: 18px; /* Ukuran ikon */
+}
+
+
 
 /* Content Wrapper */
 .main-content {
-    margin-left: 250px; /* Margin untuk sidebar terbuka */
+    margin-left: 250px; /* Margin untuk desktop */
     padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+    
+}
+
+.main-content.shifted {
+    margin-left: 175px; /* Geser margin konten sesuai lebar sidebar */
     transition: margin-left 0.3s ease-in-out;
 }
 
-.main-content.sidebar-hidden {
-    margin-left: 80px; /* Margin untuk sidebar tertutup */
+@media (max-width: 760px) {
+    .main-content {
+        margin-left: 0; /* Tidak ada margin di ponsel */
+        margin-top: 50px;
+    }
+
+    #sidebar.active + .main-content {
+        margin-left: 200px; /* Margin untuk sidebar ponsel saat terbuka */
+    }
+}
+
+/* index kelompok ternak  */
+.judul-daftar-kelompok{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.btn-tambah-kelompok{
+    background-color: #ececec;
+    border-radius:20px;
+    padding-inline: 20px;
+    border:2px solid #2f6c2f;
+}
+
+.table-tambah-kelompok{
+    border: 1;
+    border-collapse: collapse; 
+    width: 100%;
+    margin-top: 20px;
+}
+th, td {
+    border: 2px solid black; 
+    padding: 10px;         
+    text-align: left;
+    background-color: aliceblue;  
+}
+th {
+    background-color: #f2f2f2; 
+}
+
+/* buttons kelompok */
+.img-fluid.rounded-circle.kelompok-img {
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+}
+
+
+.button-tbh-kelompok {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    color: white;
+    background-color: #2f6c2f;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.button-tbh-kelompok:hover {
+    background-color: #256525;
+    transform: scale(1.1);
+}
+
+.card {
+    background-color: rgba(0, 123, 255, 0.5); /* Warna biru dengan transparansi 50% */
+    padding: 0;
+}
+
+.col {
+    padding: 0;
+    background-color: transparent;
+}
+
+.kelompok-button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.card-body {
+    padding: 10px;
+    text-decoration: none;
+    background-color: transparent; /* Mengatur latar belakang transparan */
+}
+
+.h5.card-title {
+    color: black;
+    text-decoration: none;
+}
+
+.kelompok-button:hover {
+    text-decoration: none;
+}
+
+.btn.btn-link.p-0.kelompok-button{
+    background-color: transparent;
+    background: none;
+    color: #2d2d2d;
+}
+.card.h-100.text-center.border-0.shadow{
+    background: none;
+}
+
+.btn.btn-success.rounded-circle.shadow-lg{
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+
+}
+
+.bi.bi-plus-lg{
+    align-items: center;
+    justify-content: center;
 }

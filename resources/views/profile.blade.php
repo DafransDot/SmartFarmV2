@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="main-content">
-        <h1>Profile</h1>
-        <p>Profile disini</p>
+        <h1>Penandaan Hewan Ternak</h1>
+        <p>isi disini</p>
     </div>
 @endsection

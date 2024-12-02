@@ -28,7 +28,7 @@ class HewanTernakController extends Controller
      */
     public function store(Request $request)
     {
-        $hewan = new HewanTernak();
+    $hewan = new HewanTernak();
     $hewan->nomor_id = $request->input('nomor_id');
     $hewan->jenis = $request->input('jenis');
     $hewan->vaksin = $request->input('vaksin');

@@ -14,6 +14,7 @@ class KelompokTernak extends Model
         'nama_kelompok',
         'lokasi',
         'jumlah_ternak',
+        'foto',
     ];
     public $timestamps = false;
 }

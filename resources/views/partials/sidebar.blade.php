@@ -1,7 +1,13 @@
 <!-- Sidebar -->
 <div class="w-64 h-screen bg-gray-800 text-white" id="sidebar">
-    <div class="p-4">
-        <h2 class="text-2xl font-bold">Logo</h2>
+    <div class="containerLogo">
+        <div class="logo">
+            <img src="{{ asset('img/icon.jpeg')}}" alt="SmartFarm Icon" id="logosmartfarm">
+        </div>
+    </div>
+
+    <div class="user-greeting text-white">
+            <p class="text-lg font-semibold">Hai, {{ Auth::user()->name ?? 'User' }}</p>
     </div>
 
     <ul>
@@ -14,23 +20,28 @@
         <li class="hover:bg-gray-700 p-4">
             <a href="{{ route('profile') }}" class="block">
                 <i class="bi bi-person"></i>
-                <span class="sidebar-text">Profile</span>
+                <span class="sidebar-text">Penandaan</span>
             </a>
         </li>
         <li class="hover:bg-gray-700 p-4">
-            <a href="{{ route('settings') }}" class="block">
+            <a href="{{ route('kelompok_ternak.index') }}" class="block">
                 <i class="bi bi-gear"></i>
-                <span class="sidebar-text">Settings</span>
+                <span class="sidebar-text">Mendata Ternak</span>
             </a>
         </li>
         <li class="hover:bg-gray-700 p-4">
-            <a href="{{ route('logout') }}" class="block">
-                <i class="bi bi-box-arrow-right"></i>
-                <span class="sidebar-text">Logout</span>
-            </a>
+            <form action="{{ route('logout') }}" method="POST" class="block">
+             @csrf
+                <button type="submit" class="logout-button">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="sidebar-text ml-2">Logout</span>
+                </button>
+            </form>
         </li>
+
     </ul>
 </div>
+
 
 <!-- Sidebar Toggle Button -->
 <button class="text-white bg-gray-800 p-2" id="sidebar-toggle">
