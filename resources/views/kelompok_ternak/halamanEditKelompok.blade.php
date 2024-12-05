@@ -4,7 +4,7 @@
 <div class="main-content">
     <h2>Edit Kelompok Ternak</h2>
 
-    <form action="{{ route('kelompok_ternak.update', $kelompokTernak->id) }}" method="POST">
+    <form action="{{ route('kelompok_ternak.editKelompok', $kelompokTernak->id) }}" method="POST">
         @csrf
         @method('PUT')
         <label>Nama Kelompok:</label>

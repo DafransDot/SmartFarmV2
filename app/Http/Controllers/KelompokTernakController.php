@@ -8,84 +8,108 @@ use Illuminate\Support\Facades\Storage;
 
 class KelompokTernakController extends Controller
 {
-    // Menampilkan kelompok ternak dalam bentuk tombol
+         // tampil
+    public function halamanDaftarKelompok()
+    {
+        $kelompokTernak = KelompokTernak::where('user_id', auth()->id())->get();
+        return view('kelompok_ternak.halamanDaftarKelompok', compact('kelompokTernak'));
+    }
+
+
     public function index()
     {
-        $kelompokTernak = KelompokTernak::all();
-        return view('kelompok_ternak.buttons', compact('kelompokTernak'));
-    }
-
-    // Menampilkan daftar CRUD kelompok ternak
-    public function list()
-    {
-        $kelompokTernak = KelompokTernak::all();
+        $kelompokTernak = KelompokTernak::where('user_id', auth()->id())->get();
         return view('kelompok_ternak.index', compact('kelompokTernak'));
     }
+    
+             //fitur menambah kelompok
 
-    public function create()
+    public function halamanTambahKelompok()
     {
-        return view('kelompok_ternak.create');
+        return view('kelompok_ternak.halamanTambahKelompok');
     }
 
-    public function store(Request $request)
+    public function tambahkelompokTernak(Request $request)
     {
-        $request->validate([
-            'nama_kelompok' => 'required|string|max:255',
-            'lokasi' => 'required|string|max:255',
-            'jumlah_ternak' => 'required|integer',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+    $request->validate(
+        [
+        'nama_kelompok' => 'required|string|max:255',
+        'lokasi' => 'required|string|max:255',
+        'jumlah_ternak' => 'required|integer',
+        'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Proses upload file jika ada
-        $path = $request->hasFile('foto') 
-            ? $request->file('foto')->store('img/kelompok', 'public') 
-            : 'img/kelompok/default-placeholder.png'; // Placeholder default jika tidak ada foto
 
-        // Simpan data ke database
-        KelompokTernak::create([
-            'nama_kelompok' => $request->nama_kelompok,
-            'lokasi' => $request->lokasi,
-            'jumlah_ternak' => $request->jumlah_ternak,
-            'foto' => $path,
+    $path = $request->hasFile('foto') 
+        ? $request->file('foto')->store('img/kelompok', 'public') 
+        : 'img/kelompok/default-placeholder.png';
+
+
+
+    KelompokTernak::create(
+        [
+        'nama_kelompok' => $request->nama_kelompok,
+        'lokasi' => $request->lokasi,
+        'jumlah_ternak' => $request->jumlah_ternak,
+        'foto' => $path,
+        'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil ditambahkan.');
+    return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil ditambahkan.');
     }
 
-    public function edit(KelompokTernak $kelompokTernak)
+
+            //<-->fitur edit kelompok<-->//
+
+    public function halamanEditKelompok(KelompokTernak $kelompokTernak)
     {
-        return view('kelompok_ternak.edit', compact('kelompokTernak'));
+        return view('kelompok_ternak.halamanEditKelompok', compact('kelompokTernak'));
     }
 
-    public function update(Request $request, KelompokTernak $kelompokTernak)
+    public function editKelompok(Request $request, KelompokTernak $kelompokTernak)
     {
-        $request->validate([
-            'nama_kelompok' => 'required|string|max:255',
-            'lokasi' => 'required|string|max:255',
-            'jumlah_ternak' => 'required|integer',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //validasi pengguna
+    if ($kelompokTernak->user_id !== auth()->id()) 
+    {
+        return redirect()->route('kelompok_ternak.list')->with('error', 'Anda tidak memiliki akses untuk memperbarui kelompok ternak ini.');
+    }
+
+    $request->validate(
+        [
+        'nama_kelompok' => 'required|string|max:255',
+        'lokasi' => 'required|string|max:255',
+        'jumlah_ternak' => 'required|integer',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Proses upload file baru jika ada
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($kelompokTernak->foto && $kelompokTernak->foto !== 'img/kelompok/default-placeholder.png') {
-                Storage::disk('public')->delete($kelompokTernak->foto);
-            }
 
-            // Upload foto baru
-            $kelompokTernak->foto = $request->file('foto')->store('img/kelompok', 'public');
+    if ($request->hasFile('foto')) 
+    {
+        if ($kelompokTernak->foto && $kelompokTernak->foto !== 'img/kelompok/default-placeholder.png') 
+        {
+            Storage::disk('public')->delete($kelompokTernak->foto);
         }
 
-        // Perbarui data kelompok ternak
-        $kelompokTernak->update($request->only(['nama_kelompok', 'lokasi', 'jumlah_ternak']));
 
-        return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil diperbarui.');
+        $kelompokTernak->foto = $request->file('foto')->store('img/kelompok', 'public');
     }
 
-    public function destroy(KelompokTernak $kelompokTernak)
+
+    $kelompokTernak->update($request->only(['nama_kelompok', 'lokasi', 'jumlah_ternak']));
+
+    return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil diperbarui.');
+    }
+
+
+            //<-->fitur menghapus kelompok<-->//
+
+    public function hapusKelompok(KelompokTernak $kelompokTernak)
     {
-        // Hapus foto jika ada dan bukan placeholder
+        // Memastikan hanya pemilik kelompok ternak yang bisa menghapus
+        if ($kelompokTernak->user_id !== auth()->id()) {
+            return redirect()->route('kelompok_ternak.list')->with('error', 'Anda tidak memiliki akses untuk menghapus kelompok ternak ini.');
+        }
+
         if ($kelompokTernak->foto && $kelompokTernak->foto !== 'img/kelompok/default-placeholder.png') {
             Storage::disk('public')->delete($kelompokTernak->foto);
         }

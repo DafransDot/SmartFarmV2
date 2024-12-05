@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
      // Menampilkan halaman login
-     public function showLoginForm()
+     public function tampilHalamanLogin()
      {
          return view('auth.login');
      }
@@ -35,7 +35,7 @@ class AuthController extends Controller
      }
  
      // Menampilkan halaman register
-     public function showRegisterForm()
+     public function tampilHalamanRegister()
      {
          return view('auth.register');
      }
