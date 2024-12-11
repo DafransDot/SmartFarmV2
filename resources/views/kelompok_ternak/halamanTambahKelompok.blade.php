@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Tambah Kelompok Ternak - Smartfarm')
+
 @section('content')
 <div class="main-content">
     <div class="container">
@@ -32,14 +34,7 @@
                 @enderror
             </div>
 
-            <div class="form-group">
-                <label for="jumlah_ternak">Jumlah Ternak:</label>
-                <input type="number" id="jumlah_ternak" name="jumlah_ternak" class="form-control @error('jumlah_ternak') is-invalid @enderror" required>
-                @error('jumlah_ternak')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
+            
             <div class="form-group">
                 <label for="foto">Foto Kelompok Ternak (Opsional):</label>
                 <input type="file" id="foto" name="foto" class="form-control @error('foto') is-invalid @enderror" accept="image/*"  required>

@@ -12,16 +12,22 @@ class KelompokTernak extends Model
     protected $table = 'kelompok_ternaks';
     protected $fillable = [
         'nama_kelompok',
+        'nama_ketua',
         'lokasi',
         'jumlah_ternak',
         'foto',
-        'user_id', // Menambahkan user_id sebagai relasi
+        'user_id',
     ];
 
     public $timestamps = false;
 
     public function user()
     {
-        return $this->belongsTo(User::class); // Relasi dengan model User
+        return $this->belongsTo(User::class);
+    }
+    
+    public function hewanTernak()
+    {
+        return $this->hasMany(HewanTernak::class, 'id_kelompok');
     }
 }

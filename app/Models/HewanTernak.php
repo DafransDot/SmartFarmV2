@@ -8,16 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class HewanTernak extends Model
 {
     use HasFactory;
-    protected $table = 'hewan_ternak';
+    protected $table = 'hewan_ternaks';
     protected $fillable = [
+        'nomor_tag',
         'jenis_sapi',
         'umur',
-        'id_kelompok',
+        'berat_badan',
         'jenis_kelamin',
+        'jumlah_anak',
+        'status_melahirkan',
+        'riwayat_cekkesehatan',
+        'riwayat_penanganan',
+        'status_penanganan',
         'riwayat_penyakit',
-        'riwayat_pemeriksaan',
+        'id_kelompok',
     ];
-    public $timestamps = false;
+
 
     public function kelompokTernak()
     {

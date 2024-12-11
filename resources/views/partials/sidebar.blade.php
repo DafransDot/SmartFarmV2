@@ -36,7 +36,7 @@
             </a>
         </li>
         <li class="hover:bg-gray-700 p-4">
-            <a href="{{ route('kelompok_ternak.index') }}" class="block">
+            <a href="{{ route('laporan.index') }}" class="block">
                 <i class="bi bi-journal-text"></i>
                 <span class="sidebar-text">Laporan</span>
             </a>

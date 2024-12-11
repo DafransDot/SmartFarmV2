@@ -1,22 +1,59 @@
 @extends('layouts.app')
 
+@section('title','Edit Hewan Ternak - Smartfarm')
+
 @section('content')
 <div class="main-content">
+    <!-- ini formulir -->
     <h1>Edit Hewan Ternak</h1>
     <form action="{{ route('hewan_ternak.editHewanTernak', $hewanTernak->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div>
-            <label for="jenis_sapi">Jenis Sapi:</label>
-            <input type="text" name="jenis_sapi" id="jenis_sapi" value="{{ $hewanTernak->jenis_sapi }}" required>
+
+        <div class="mb-3">
+            <label for="nomor_tag" class="form-label">Nomor Tag:</label>
+            <input type="text" name="nomor_tag" id="nomor_tag" class="form-control" value="{{ $hewanTernak->nomor_tag }}" required>
         </div>
-        <div>
-            <label for="umur">Umur:</label>
-            <input type="date" name="umur" id="umur" value="{{ $hewanTernak->umur }}" required>
+
+        <div class="mb-3">
+            <label for="jenis_sapi" class="form-label">Jenis Sapi:</label>
+            <input type="text" name="jenis_sapi" id="jenis_sapi" class="form-control" value="{{ $hewanTernak->jenis_sapi }}" required>
         </div>
-        <div>
-            <label for="id_kelompok">Kelompok Ternak:</label>
-            <select name="id_kelompok" id="id_kelompok">
+
+        <div class="mb-3">
+            <label for="umur" class="form-label">Umur:</label>
+            <input type="date" name="umur" id="umur" class="form-control" value="{{ $hewanTernak->umur }}"  max="{{ date('Y-m-d') }}"  required>
+        </div>
+
+        <div class="mb-3">
+            <label for="berat_badan" class="form-label">Berat Badan (kg):</label>
+            <input type="number" name="berat_badan" id="berat_badan" class="form-control" value="{{ $hewanTernak->berat_badan }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="jenis_kelamin" class="form-label">Jenis Kelamin:</label>
+            <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
+                <option value="Jantan" {{ $hewanTernak->jenis_kelamin == 'Jantan' ? 'selected' : '' }}>Jantan</option>
+                <option value="Betina" {{ $hewanTernak->jenis_kelamin == 'Betina' ? 'selected' : '' }}>Betina</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="jumlah_anak" class="form-label">Jumlah Anak:</label>
+            <input type="number" name="jumlah_anak" id="jumlah_anak" class="form-control" value="{{ $hewanTernak->jumlah_anak }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="status_melahirkan" class="form-label">Status Melahirkan:</label>
+            <select name="status_melahirkan" id="status_melahirkan" class="form-select">
+                <option value="Belum Pernah" {{ $hewanTernak->status_melahirkan == 'Belum Pernah' ? 'selected' : '' }}>Belum Pernah</option>
+                <option value="Pernah" {{ $hewanTernak->status_melahirkan == 'Pernah' ? 'selected' : '' }}>Pernah</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_kelompok" class="form-label">Kelompok Ternak:</label>
+            <select name="id_kelompok" id="id_kelompok" class="form-select">
                 @foreach($kelompokTernak as $kelompok)
                     <option value="{{ $kelompok->id }}" {{ $kelompok->id == $hewanTernak->id_kelompok ? 'selected' : '' }}>
                         {{ $kelompok->nama_kelompok }}
@@ -24,14 +61,33 @@
                 @endforeach
             </select>
         </div>
-        <div>
-            <label for="jenis_kelamin">Jenis Kelamin:</label>
-            <select name="jenis_kelamin" id="jenis_kelamin" required>
-                <option value="Jantan" {{ $hewanTernak->jenis_kelamin == 'Jantan' ? 'selected' : '' }}>Jantan</option>
-                <option value="Betina" {{ $hewanTernak->jenis_kelamin == 'Betina' ? 'selected' : '' }}>Betina</option>
+
+        <div class="mb-3">
+            <label for="riwayat_cekkesehatan" class="form-label">Riwayat Cek Kesehatan:</label>
+            <input type="date" name="riwayat_cekkesehatan" id="riwayat_cekkesehatan" class="form-control" value="{{ $hewanTernak->riwayat_cekkesehatan }} "  max="{{ date('Y-m-d') }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="riwayat_penanganan" class="form-label">Riwayat Penanganan:</label>
+            <input type="date" name="riwayat_penanganan" id="riwayat_penanganan" class="form-control" value="{{ $hewanTernak->riwayat_penanganan }}"  max="{{ date('Y-m-d') }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="status_penanganan" class="form-label">Status Penanganan:</label>
+            <select name="status_penanganan" id="status_penanganan" class="form-select">
+                <option value="Sembuh" {{ $hewanTernak->status_penanganan == 'Sembuh' ? 'selected' : '' }}>Sembuh</option>
+                <option value="Dalam Perawatan" {{ $hewanTernak->status_penanganan == 'Dalam Perawatan' ? 'selected' : '' }}>Dalam Perawatan</option>
+                <option value="Belum Ditangani" {{ $hewanTernak->status_penanganan == 'Belum Ditangani' ? 'selected' : '' }}>Belum Ditangani</option>
+                <option value="-" {{ $hewanTernak->status_penanganan == '-' ? 'selected' : '' }}>-</option>
             </select>
         </div>
-        <button type="submit">Simpan</button>
+
+        <div class="mb-3">
+            <label for="riwayat_penyakit" class="form-label">Riwayat Penyakit:</label>
+            <input type="text" name="riwayat_penyakit" id="riwayat_penyakit" class="form-control" value="{{ $hewanTernak->riwayat_penyakit }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>
 @endsection

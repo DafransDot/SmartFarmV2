@@ -7,6 +7,7 @@ use App\Http\Controllers\KelompokTernakController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KesehatanController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ use App\Http\Controllers\DashboardController;
 | will be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/', function () {
+    return view('dashboard');
+})->middleware('auth');
 
 // Autentikasi Routes
 Route::get('/login', [AuthController::class, 'tampilHalamanLogin'])->name('login');
@@ -79,5 +84,13 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth'])->group(function () {
     // fitur cari Hewan ternak
     Route::get('/kesehatan_hewan', [KesehatanController::class, 'index'])->name('kesehatan_hewan.index');
-    Route::post('/kesehatan_hewan/halamanDetailKesehatanHewan.', [KesehatanController::class, 'cariHewan'])->name('kesehatan_hewan.halamanDetailKesehatanHewan');
+
+    // Pencarian hewan ternak
+    Route::post('/kesehatan_hewan/halamanDetailKesehatanHewan', [KesehatanController::class, 'cariHewan'])->name('kesehatan_hewan.halamanDetailKesehatanHewan');
+
+    // Penyimpanan data kesehatan hewan ternak
+    Route::put('/kesehatan_hewan/{hewanTernak}', [KesehatanController::class, 'simpanKesehatan'])->name('kesehatan_hewan.simpanKesehatan');
 });
+
+Route::get('/laporan', [LaporanController::class, 'halamanLaporan'])->name('laporan.index');
+Route::post('/laporan/laporan-kelompok-ternak', [LaporanController::class, 'buatLaporan'])->name('laporan.buatLaporan');

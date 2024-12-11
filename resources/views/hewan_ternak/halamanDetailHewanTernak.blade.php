@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
+@section('title','Hewan Ternak - Smartfarm')
+
 @section('content')
 <div class="main-content">
     <div class="container">
         <h1>Detail Hewan Ternak</h1>
         <table class="table table-bordered">
+            
             <tr>
-                <th>ID</th>
-                <td>{{ $hewanTernak->id }}</td>
+                <th>Nomor Tag</th>
+                <td>{{ $hewanTernak->nomor_tag }}</td>
             </tr>
             <tr>
                 <th>Jenis Sapi</th>
@@ -20,6 +23,39 @@
             <tr>
                 <th>Jenis Kelamin</th>
                 <td>{{ $hewanTernak->jenis_kelamin }}</td>
+            </tr>
+            <tr>
+                <th>id kelompok</th>
+                <td>{{ $hewanTernak->id_kelompok }}</td>
+            </tr>
+            <tr>
+                <th>Berat badan</th>
+                <td>{{ $hewanTernak->berat_badan }}</td>
+            </tr>
+            <tr>
+                <th>Jumlah Anak</th>
+                <td>{{ $hewanTernak->jumlah_anak }}</td>
+            </tr>
+            <tr>
+                <th>Status Melahirkan</th>
+                <td>{{ $hewanTernak->status_melahirkan }}</td>
+            </tr>
+
+            <tr>
+                <th>Riwayat Pemeriksaan Kesehatan</th>
+                <td>{{ $hewanTernak->riwayat_cekkesehatan ? \Carbon\Carbon::parse($hewanTernak->riwayat_cekkesehatan)->format('d-m-Y') : 'Tidak ada data' }}</td>
+            </tr>
+            <tr>
+                <th>Riwayat Penanganan</th>
+                <td>{{ $hewanTernak->riwayat_penanganan ? \Carbon\Carbon::parse($hewanTernak->riwayat_penanganan)->format('d-m-Y') : 'Tidak ada data' }}</td>
+            </tr>
+            <tr>
+                <th>Status Penanganan</th>
+                <td>{{ $hewanTernak->status_penanganan ?? 'Tidak ada data' }}</td>
+            </tr>
+            <tr>
+                <th>Riwayat Penyakit</th>
+                <td>{{ $hewanTernak->riwayat_penyakit ?? 'Tidak ada data' }}</td>
             </tr>
         </table>
 

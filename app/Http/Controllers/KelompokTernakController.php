@@ -33,9 +33,9 @@ class KelompokTernakController extends Controller
     {
     $request->validate(
         [
-        'nama_kelompok' => 'required|string|max:255',
-        'lokasi' => 'required|string|max:255',
-        'jumlah_ternak' => 'required|integer',
+        'nama_kelompok' => 'required|string|max:32',
+        'nama_ketua' => 'required|string|max:32',
+        'lokasi' => 'required|string|max:32',
         'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -49,13 +49,13 @@ class KelompokTernakController extends Controller
     KelompokTernak::create(
         [
         'nama_kelompok' => $request->nama_kelompok,
+        'nama_ketua' => $request->nama_ketua,
         'lokasi' => $request->lokasi,
-        'jumlah_ternak' => $request->jumlah_ternak,
         'foto' => $path,
         'user_id' => auth()->id(),
         ]);
 
-    return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil ditambahkan.');
+    return redirect()->route('kelompok_ternak.halamanDaftarKelompok')->with('success', 'Data kelompok ternak berhasil ditambahkan.');
     }
 
 
@@ -76,9 +76,9 @@ class KelompokTernakController extends Controller
 
     $request->validate(
         [
-        'nama_kelompok' => 'required|string|max:255',
-        'lokasi' => 'required|string|max:255',
-        'jumlah_ternak' => 'required|integer',
+        'nama_kelompok' => 'required|string|max:32',
+        'nama_ketua' => 'required|string|max:32',
+        'lokasi' => 'required|string|max:32',
         'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -95,26 +95,32 @@ class KelompokTernakController extends Controller
     }
 
 
-    $kelompokTernak->update($request->only(['nama_kelompok', 'lokasi', 'jumlah_ternak']));
+    $kelompokTernak->update($request->only(['nama_kelompok','nama_ketua', 'lokasi', 'jumlah_ternak']));
 
-    return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil diperbarui.');
+    return redirect()->route('kelompok_ternak.halamanDaftarKelompok')->with('success', 'Data kelompok ternak berhasil diperbarui.');
     }
 
 
             //<-->fitur menghapus kelompok<-->//
 
-    public function hapusKelompok(KelompokTernak $kelompokTernak)
-    {
-        // Memastikan hanya pemilik kelompok ternak yang bisa menghapus
-        if ($kelompokTernak->user_id !== auth()->id()) {
-            return redirect()->route('kelompok_ternak.list')->with('error', 'Anda tidak memiliki akses untuk menghapus kelompok ternak ini.');
-        }
-
-        if ($kelompokTernak->foto && $kelompokTernak->foto !== 'img/kelompok/default-placeholder.png') {
-            Storage::disk('public')->delete($kelompokTernak->foto);
-        }
-
-        $kelompokTernak->delete();
-        return redirect()->route('kelompok_ternak.list')->with('success', 'Data kelompok ternak berhasil dihapus.');
+public function hapusKelompok(KelompokTernak $kelompokTernak)
+{
+    // Memastikan hanya pemilik kelompok ternak yang bisa menghapus
+    if ($kelompokTernak->user_id !== auth()->id()) {
+        return redirect()->route('kelompok_ternak.list')->with('error', 'Anda tidak memiliki akses untuk menghapus kelompok ternak ini.');
     }
+
+    // Menghapus foto kelompok ternak jika ada
+    if ($kelompokTernak->foto && $kelompokTernak->foto !== 'img/kelompok/default-placeholder.png') {
+        Storage::disk('public')->delete($kelompokTernak->foto);
+    }
+
+    // Menghapus hewan ternak yang terkait dengan kelompok ternak ini
+    $kelompokTernak->hewanTernak()->delete();
+
+    // Menghapus kelompok ternak itu sendiri
+    $kelompokTernak->delete();
+
+    return redirect()->route('kelompok_ternak.halamanDaftarKelompok')->with('success', 'Data kelompok ternak beserta hewan ternak terkait berhasil dihapus.');
+}
 }

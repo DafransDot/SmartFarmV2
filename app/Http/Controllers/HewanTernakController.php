@@ -23,7 +23,9 @@ class HewanTernakController extends Controller
             $query->where('id_kelompok', $kelompokId);
         }
 
-        $hewanTernaks = $query->get();
+        $query->orderByRaw("FIELD(status_penanganan, 'Belum Ditangani', 'Dalam Perawatan', 'Sembuh', '-')");
+
+        $hewanTernaks = $query->paginate(10);
         $kelompokTernaks = KelompokTernak::where('user_id', auth()->id())->get();
 
         return view('hewan_ternak.index', compact('hewanTernaks', 'kelompokTernaks'));
@@ -42,7 +44,8 @@ class HewanTernakController extends Controller
     public function tambahHewanTernak(Request $request)
     {
         $request->validate([
-            'jenis_sapi' => 'required|string|max:255',
+            'nomor_tag' => 'required|string|max:32|unique:hewan_ternaks',
+            'jenis_sapi' => 'required|string|max:32',
             'umur' => 'required|date',
             'id_kelompok' => 'required|exists:kelompok_ternaks,id',
             'jenis_kelamin' => 'required|in:Jantan,Betina',
@@ -54,13 +57,14 @@ class HewanTernakController extends Controller
             ->first();
 
         if (!$kelompokTernak) {
-            return redirect()->route('hewan_ternak.index')->with('error', 'Anda tidak memiliki akses ke kelompok ternak ini.');
+            return redirect()->route('hewan_ternak.halamanPenandaanHewanTernak')->with('error', 'Anda tidak memiliki akses ke kelompok ternak ini.');
         }
 
         HewanTernak::create($request->all());
 
         return redirect()->route('hewan_ternak.halamanPenandaanHewanTernak')->with('success', 'Hewan ternak berhasil ditambahkan.');
     }
+
 
 
     // Tampilkan detail hewan ternak
@@ -84,15 +88,24 @@ class HewanTernakController extends Controller
         $this->authorizeAccess($hewanTernak);
 
         $request->validate([
-            'jenis_sapi' => 'required|string|max:255',
+            'nomor_tag' => 'required|string|max:32|unique:hewan_ternaks,nomor_tag,' . $hewanTernak->id,
+            'jenis_sapi' => 'required|string|max:32',
             'umur' => 'required|date',
             'id_kelompok' => 'required|exists:kelompok_ternaks,id',
             'jenis_kelamin' => 'required|in:Jantan,Betina',
+            'status_melahirkan' => 'required|in:Belum Pernah, Pernah',
+            'riwayat_cekkesehatan' => 'nullable|date',
+            'riwayat_penanganan' => 'nullable|date',
+            'status_penanganan' => 'nullable|in:Sembuh,Dalam Perawatan,Belum Ditangani,-',
+            'riwayat_penyakit' => 'nullable|string|max:32',
         ]);
-
+    
         $hewanTernak->update($request->all());
-
-        return redirect()->route('hewan_ternak.index')->with('success', 'Hewan ternak berhasil diperbarui.');
+    
+        $kelompokId = $request->input('id_kelompok');
+    
+        return redirect()->route('hewan_ternak.index', ['kelompok_id' => $kelompokId])
+            ->with('success', 'Hewan ternak berhasil diperbarui.');
     }
 
     // Hapus data hewan ternak
