@@ -19,7 +19,9 @@ class KesehatanController extends Controller
         ]);
 
         $cari = $request->input('cari');
-        $hewanTernak = HewanTernak::where('nomor_tag', '=', $cari)->first();
+        $hewanTernak = HewanTernak::where('nomor_tag', '=', $cari)
+        ->whereNull('status_pengurangan')
+        ->first();
 
         if (!$hewanTernak) {
             return redirect()->back()->withErrors(['cari' => 'Hewan ternak tidak ditemukan.']);

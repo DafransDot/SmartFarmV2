@@ -16,11 +16,12 @@ class HewanTernak extends Model
         'berat_badan',
         'jenis_kelamin',
         'jumlah_anak',
-        'status_melahirkan',
+        'status_kelahiran',
         'riwayat_cekkesehatan',
         'riwayat_penanganan',
         'status_penanganan',
         'riwayat_penyakit',
+        'status_pengurangan',
         'id_kelompok',
     ];
 

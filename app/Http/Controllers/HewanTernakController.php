@@ -15,9 +15,12 @@ class HewanTernakController extends Controller
 
         // Filter hewan ternak berdasarkan kelompok dan user yang sedang login
         $query = HewanTernak::with('kelompokTernak')
+            ->whereNull('status_pengurangan')
             ->whereHas('kelompokTernak', function ($query) {
                 $query->where('user_id', auth()->id());
             });
+            
+
 
         if ($kelompokId) {
             $query->where('id_kelompok', $kelompokId);
@@ -47,6 +50,7 @@ class HewanTernakController extends Controller
             'nomor_tag' => 'required|string|max:32|unique:hewan_ternaks',
             'jenis_sapi' => 'required|string|max:32',
             'umur' => 'required|date',
+            'status_kelahiran'=>'required|in:Kawin Alami,Kawin Suntik,Pembelian,Penambahan Lain',
             'id_kelompok' => 'required|exists:kelompok_ternaks,id',
             'jenis_kelamin' => 'required|in:Jantan,Betina',
         ]);
@@ -93,7 +97,7 @@ class HewanTernakController extends Controller
             'umur' => 'required|date',
             'id_kelompok' => 'required|exists:kelompok_ternaks,id',
             'jenis_kelamin' => 'required|in:Jantan,Betina',
-            'status_melahirkan' => 'required|in:Belum Pernah, Pernah',
+            'status_kelahiran'=>'required|in:Kawin Alami,Kawin Suntik,Pembelian,Penambahan Lain',
             'riwayat_cekkesehatan' => 'nullable|date',
             'riwayat_penanganan' => 'nullable|date',
             'status_penanganan' => 'nullable|in:Sembuh,Dalam Perawatan,Belum Ditangani,-',
@@ -109,13 +113,22 @@ class HewanTernakController extends Controller
     }
 
     // Hapus data hewan ternak
-    public function hapusHewanTernak(HewanTernak $hewanTernak)
-    {
-        $this->authorizeAccess($hewanTernak);
-        $hewanTernak->delete();
-
-        return redirect()->route('hewan_ternak.index')->with('success', 'Hewan ternak berhasil dihapus.');
-    }
+    public function hapusHewanTernak(Request $request, HewanTernak $hewanTernak)
+        {
+            $this->authorizeAccess($hewanTernak);
+        
+            $request->validate([
+                'status_pengurangan' => 'required|in:Kematian,Pemotongan,Penjualan,Pengurangan Lain',
+            ]);
+        
+            $hewanTernak->update(['status_pengurangan' => $request->status_pengurangan]);
+            
+            $kelompokId = $hewanTernak->id_kelompok;
+            
+            return redirect()->route('hewan_ternak.index', ['kelompok_id' => $kelompokId])
+                ->with('success', 'Hewan ternak berhasil diperbarui dengan status pengurangan.');
+        }
+    
 
     // Cek akses pengguna terhadap data
     private function authorizeAccess(HewanTernak $hewanTernak)

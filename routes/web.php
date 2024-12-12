@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/hewan_ternak/{hewanTernak}', [HewanTernakController::class, 'editHewanTernak'])->name('hewan_ternak.editHewanTernak');
 
     //fitur Hapus Hewan Ternak
-    Route::delete('/hewan_ternak/{hewanTernak}', [HewanTernakController::class, 'hapusHewanTernak'])->name('hewan_ternak.hapusHewanTernak');
+    Route::post('/hewan_ternak/{hewanTernak}', [HewanTernakController::class, 'hapusHewanTernak'])->name('hewan_ternak.hapusHewanTernak');
 });
 
 // Rute untuk kesehatan Controler yang hanya dapat diakses oleh pengguna yang sudah login

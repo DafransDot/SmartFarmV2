@@ -65,10 +65,12 @@
                     <input type="number" name="jumlah_anak" id="jumlah_anak" class="form-control" value="0" min="0">
                 </div>
                 <div class="mb-3">
-                    <label for="status_melahirkan" class="form-label">Status Melahirkan:</label>
-                    <select name="status_melahirkan" id="status_melahirkan" class="form-select">
-                        <option value="Belum Pernah">Belum Pernah</option>
-                        <option value="Pernah">Pernah</option>
+                    <label for="status_kelahiran" class="form-label">Status Kelahiran:</label>
+                    <select name="status_kelahiran" id="status_kelahiran" class="form-select">
+                        <option value="Kawin Alami">Kawin Alami</option>
+                        <option value="Kawin Suntik" >Kawin Suntik</option>
+                        <option value="Pembelian">Pembelian</option>
+                        <option value="Penambahan Lain">Penambahan Lain</option>
                     </select>
                 </div>
                 <div class="mb-3">

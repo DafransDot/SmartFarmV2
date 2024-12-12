@@ -29,15 +29,7 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="kelompok_id" class="form-label">Pilih Kelompok Ternak:</label>
-            <select name="kelompok_id" id="kelompok_id" class="form-select">
-                <option value="all">Semua Kelompok</option>
-                @foreach ($kelompokTernaks as $kelompok)
-                    <option value="{{ $kelompok->id }}">{{ $kelompok->nama_kelompok }}</option>
-                @endforeach
-            </select>
-        </div>
+        
 
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn" style="background-color: #256525; color: white;">Generate PDF</button>

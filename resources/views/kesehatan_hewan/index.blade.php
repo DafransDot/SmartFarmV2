@@ -35,7 +35,7 @@
         @csrf
         <div class="form-group mb-3">
             <label for="cari" class="form-label">Masukkan Nomor Tag Hewan Ternak:</label>
-            <input type="text" id="cari" name="cari" class="form-control @error('cari') is-invalid @enderror" required>
+            <input type="text" id="cari" name="cari" class="form-control @error('cari') is-invalid @enderror" required style="text-transform: uppercase;">
             @error('cari')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Hewan Ternak</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJf7c5l5RU01p9ldU2Utw8pbb2D0dSk8t1zQ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -21,6 +21,7 @@
             color: #343a40;
             margin-bottom: 30px;
             font-weight: bold;
+            text-align: center;
         }
 
         h2 {
@@ -59,59 +60,54 @@
             overflow-x: auto;
         }
 
-        .info-section {
-            margin-bottom: 20px;
+        .group-heading {
+            margin-top: 30px;
         }
 
-        .info-section p {
-            margin: 0;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
 <div class="container my-5">
-    <h1 class="text-center">Laporan Hewan Ternak</h1>
+    <h1>Laporan Hewan Ternak</h1>
 
-    <!-- Informasi Kelompok -->
-    <div class="info-section">
-        <p><strong>Kelompok:</strong> {{ $kelompok->nama_kelompok }}</p>
-        <p><strong>Ketua:</strong> {{ $kelompok->nama_ketua }}</p>
-        <p><strong>Lokasi:</strong> {{ $kelompok->lokasi }}</p>
-        <p><strong>Jumlah Ternak:</strong> {{ $kelompok->jumlah_ternak }}</p>
-    </div>
+    @foreach($kelompokTernaks as $kelompok)
+        <div class="group-heading">
+            <h2>Nama Kelompok: {{ $kelompok->nama_kelompok }}</h2>
+            <p><strong>Nama Ketua:</strong> {{ $kelompok->nama_ketua }}</p>
+            <p><strong>Jumlah Hewan Ternak:</strong> {{ $kelompok->hewanTernak->count() }}</p>
+            <p><strong>Alamat:</strong> {{ $kelompok->alamat }}</p>
 
-    <h2>Daftar Hewan Ternak:</h2>
+            <h3>Daftar Hewan Ternak:</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nomor Tag</th>
+                            <th>Umur</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Jenis Sapi</th>
+                            <th>Berat Badan</th>
+                            <th>Status Hewan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($kelompok->hewanTernak as $hewan)
+                        <tr>
+                            <td>{{ $hewan->nomor_tag }}</td>
+                            <td>{{ $hewan->kategori_umur }}</td>
+                            <td>{{ $hewan->jenis_kelamin }}</td>
+                            <td>{{ $hewan->jenis_sapi }}</td>
+                            <td>{{ $hewan->berat_badan }} kg</td>
+                            <td>{{ $hewan->status_pengurangan ?? 'Aktif' }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+    @endforeach
 
-    <!-- Tabel Daftar Hewan Ternak -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nomor Tag</th>
-                    <th>Jenis Sapi</th>
-                    <th>Umur</th>
-                    <th>jenis kelamin</th>
-                    <th>Berat Badan</th>
-                    <th>Status Hewan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($hewanTernak as $hewan)
-                <tr>
-                    <td>{{ $hewan->nomor_tag }}</td>
-                    <td>{{ $hewan->jenis_sapi }}</td>
-                    <td>{{ $hewan->kategori_umur }}</td>
-                    <td>{{ $hewan->jenis_kelamin}}</td>
-                    <td>{{ $hewan->berat_badan }} kg</td>
-                    <td>{{ $hewan->status_hewan }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Footer -->
     <div class="footer">
         <p>Terima kasih telah menggunakan sistem manajemen ternak. Semua data adalah milik peternak yang terdaftar.</p>
     </div>

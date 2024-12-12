@@ -44,10 +44,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="status_melahirkan" class="form-label">Status Melahirkan:</label>
-            <select name="status_melahirkan" id="status_melahirkan" class="form-select">
-                <option value="Belum Pernah" {{ $hewanTernak->status_melahirkan == 'Belum Pernah' ? 'selected' : '' }}>Belum Pernah</option>
-                <option value="Pernah" {{ $hewanTernak->status_melahirkan == 'Pernah' ? 'selected' : '' }}>Pernah</option>
+            <label for="status_kelahiran" class="form-label">Status Kelahiran:</label>
+            <select name="status_kelahiran" id="status_kelahiran" class="form-select">
+                <option value="Kawin Alami" {{ $hewanTernak->status_kelahiran == 'Kawin Alami' ? 'selected' : '' }}>Kawin Alami</option>
+                <option value="Kawin Suntik" {{ $hewanTernak->status_kelahiran == 'Kawin Suntik' ? 'selected' : '' }}>Kawin Suntik</option>
+                <option value="Pembelian" {{ $hewanTernak->status_kelahiran == 'Pembelian' ? 'selected' : '' }}>Pembelian</option>
+                <option value="Penambahan Lain" {{ $hewanTernak->status_kelahiran == 'Penambahan Lain' ? 'selected' : '' }}>Penambahan Lain</option>
             </select>
         </div>
 
