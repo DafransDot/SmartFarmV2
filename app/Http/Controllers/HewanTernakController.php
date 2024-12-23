@@ -137,4 +137,5 @@ class HewanTernakController extends Controller
             abort(403, 'Anda tidak memiliki akses ke hewan ternak ini.');
         }
     }
+
 }

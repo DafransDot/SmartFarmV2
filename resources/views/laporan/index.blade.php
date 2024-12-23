@@ -32,7 +32,7 @@
         
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn" style="background-color: #256525; color: white;">Generate PDF</button>
+            <button type="submit" class="btn" style="background-color: #256525; color: white;">Unduh</button>
         </div>
     </form>
 </div>

@@ -30,9 +30,9 @@
     </div>
     <!-- ini content -->
     <h2 class="judul-daftar-kelompok">Daftar Kelompok Ternak</h2>
-    <a href="{{ route('kelompok_ternak.halamanTambahKelompok') }}" class="btn-tambah-kelompok">Tambah Kelompok</a>
+    <a href="{{ route('kelompok_ternak.halamanTambahKelompok') }}" class="btn-tambah-kelompok" style="background-color: blue; color: white">Tambah Kelompok</a>
 
-    
+
     <table class="table-tambah-kelompok">
         <thead>
             <tr>
@@ -51,21 +51,46 @@
                 <td>{{ $kelompok->lokasi }}</td>
                 <td>{{ $kelompok->jumlah_ternak }}</td>
                 <td>
-                    <a href="{{ route('kelompok_ternak.halamanEditKelompok', $kelompok->id) }}">Edit</a>
-                    <form action="{{ route('kelompok_ternak.hapusKelompok', $kelompok->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(event)">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Hapus</button>
-                    </form>
+                     <a href="{{ route('kelompok_ternak.halamanEditKelompok', $kelompok->id) }}" class="btn" style="background-color: blue; color: white; padding: 5px 15px; font-size: 14px; text-decoration: none; border-radius: 3px; border: 1px solid #ccc;">
+                     Edit
+                    </a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $kelompok->id }}">
+                        Hapus
+                    </button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    
+
+    <!-- Modal Konfirmasi Hapus -->
+    @foreach ($kelompokTernak as $kelompok)
+    <div class="modal fade" id="deleteModal{{ $kelompok->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $kelompok->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel{{ $kelompok->id }}">Konfirmasi Penghapusan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus kelompok ternak <strong>{{ $kelompok->nama_kelompok }}</strong>?</p>
+                    <form action="{{ route('kelompok_ternak.hapusKelompok', $kelompok->id) }}" method="POST" id="deleteForm{{ $kelompok->id }}">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" onclick="document.getElementById('deleteForm{{ $kelompok->id }}').submit();">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
 </div>
+
 <script>
-     document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         @if(session('success'))
             var toastEl = document.getElementById('successToast');
             var toast = new bootstrap.Toast(toastEl);
@@ -77,4 +102,5 @@
         @endif
     });
 </script>
+
 @endsection

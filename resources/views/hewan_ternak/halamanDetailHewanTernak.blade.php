@@ -61,7 +61,7 @@
             <a href="{{ route('hewan_ternak.halamanEditHewanTernak', $hewanTernak->id) }}" class="btn btn-primary">Edit</a>
             <!-- Button untuk memunculkan modal -->
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapusModal">
-                Nonaktifkan
+                Hapus
             </button>
         </div>
     </div>
@@ -72,7 +72,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="hapusModalLabel">Nonaktifkan Hewan Ternak</h5>
+                <h5 class="modal-title" id="hapusModalLabel">Hapus</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('hewan_ternak.hapusHewanTernak', $hewanTernak->id) }}" method="POST">

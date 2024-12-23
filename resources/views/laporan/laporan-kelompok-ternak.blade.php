@@ -75,7 +75,7 @@
             <h2>Nama Kelompok: {{ $kelompok->nama_kelompok }}</h2>
             <p><strong>Nama Ketua:</strong> {{ $kelompok->nama_ketua }}</p>
             <p><strong>Jumlah Hewan Ternak:</strong> {{ $kelompok->hewanTernak->count() }}</p>
-            <p><strong>Alamat:</strong> {{ $kelompok->alamat }}</p>
+            <p><strong>Alamat:</strong> {{ $kelompok->lokasi }}</p>
 
             <h3>Daftar Hewan Ternak:</h3>
             <div class="table-container">
@@ -109,7 +109,7 @@
     @endforeach
 
     <div class="footer">
-        <p>Terima kasih telah menggunakan sistem manajemen ternak. Semua data adalah milik peternak yang terdaftar.</p>
+        <p>Terima kasih telah menggunakan Smartfarm. Semua data adalah milik peternak yang terdaftar.</p>
     </div>
 </div>
 </body>
