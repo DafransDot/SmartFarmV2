@@ -53,8 +53,8 @@ class LaporanController extends Controller
         // Ambil data KelompokTernak beserta hewan ternaknya
         $kelompokTernaks = KelompokTernak::with(['hewanTernak' => function ($query) use ($startDate) {
             $query->where(function ($query) use ($startDate) {
-                $query->where('created_at', '>=', $startDate) // Filter berdasarkan periode
-                      ->orWhereNotNull('status_pengurangan'); // Ambil hewan yang sudah ada status pengurangannya
+                $query->where('created_at', '>=', $startDate)
+                      ->orWhereNotNull('status_pengurangan'); 
             });
         }])->get()
           ->map(function ($kelompok) {
@@ -79,7 +79,8 @@ class LaporanController extends Controller
           });
 
         if ($kelompokTernaks->isEmpty()) {
-            return redirect()->back()->with('error', 'Tidak ada data kelompok ternak untuk periode yang dipilih.');
+            return redirect()->back()
+            ->with('error', 'Tidak ada data kelompok ternak untuk periode yang dipilih.');
         }
 
         // Buat PDF menggunakan view laporan

@@ -46,7 +46,8 @@ class KesehatanController extends Controller
             'riwayat_penyakit',
         ]));
 
-        return redirect()->route('kesehatan_hewan.index')->with('success', 'Data kesehatan hewan berhasil diperbarui.');
+        return redirect()->route('kesehatan_hewan.index')
+        ->with('success', 'Data kesehatan hewan berhasil diperbarui.');
     }
     
 

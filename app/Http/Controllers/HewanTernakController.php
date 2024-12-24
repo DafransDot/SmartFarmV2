@@ -12,8 +12,6 @@ class HewanTernakController extends Controller
     public function index(Request $request)
     {
         $kelompokId = $request->get('kelompok_id');
-
-        // Filter hewan ternak berdasarkan kelompok dan user yang sedang login
         $query = HewanTernak::with('kelompokTernak')
             ->whereNull('status_pengurangan')
             ->whereHas('kelompokTernak', function ($query) {
@@ -47,11 +45,11 @@ class HewanTernakController extends Controller
     public function tambahHewanTernak(Request $request)
     {
         $request->validate([
-            'nomor_tag' => 'required|string|max:32|unique:hewan_ternaks',
+            'nomor_tag' => 'required|string|max:32|unique:hewan_ternak',
             'jenis_sapi' => 'required|string|max:32',
             'umur' => 'required|date',
             'status_kelahiran'=>'required|in:Kawin Alami,Kawin Suntik,Pembelian,Penambahan Lain',
-            'id_kelompok' => 'required|exists:kelompok_ternaks,id',
+            'id_kelompok' => 'required|exists:kelompok_ternak,id',
             'jenis_kelamin' => 'required|in:Jantan,Betina',
         ]);
 
@@ -61,12 +59,14 @@ class HewanTernakController extends Controller
             ->first();
 
         if (!$kelompokTernak) {
-            return redirect()->route('hewan_ternak.halamanPenandaanHewanTernak')->with('error', 'Anda tidak memiliki akses ke kelompok ternak ini.');
+            return redirect()->route('hewan_ternak.halamanPenandaanHewanTernak')
+            ->with('error', 'Anda tidak memiliki akses ke kelompok ternak ini.');
         }
 
         HewanTernak::create($request->all());
 
-        return redirect()->route('hewan_ternak.halamanPenandaanHewanTernak')->with('success', 'Hewan ternak berhasil ditambahkan.');
+        return redirect()->route('hewan_ternak.halamanPenandaanHewanTernak')
+        ->with('success', 'Hewan ternak berhasil ditambahkan.');
     }
 
 
@@ -92,10 +92,10 @@ class HewanTernakController extends Controller
         $this->authorizeAccess($hewanTernak);
 
         $request->validate([
-            'nomor_tag' => 'required|string|max:32|unique:hewan_ternaks,nomor_tag,' . $hewanTernak->id,
+            'nomor_tag' => 'required|string|max:32|unique:hewan_ternak,nomor_tag,' . $hewanTernak->id,
             'jenis_sapi' => 'required|string|max:32',
             'umur' => 'required|date',
-            'id_kelompok' => 'required|exists:kelompok_ternaks,id',
+            'id_kelompok' => 'required|exists:kelompok_ternak,id',
             'jenis_kelamin' => 'required|in:Jantan,Betina',
             'status_kelahiran'=>'required|in:Kawin Alami,Kawin Suntik,Pembelian,Penambahan Lain',
             'riwayat_cekkesehatan' => 'nullable|date',
@@ -126,7 +126,7 @@ class HewanTernakController extends Controller
             $kelompokId = $hewanTernak->id_kelompok;
             
             return redirect()->route('hewan_ternak.index', ['kelompok_id' => $kelompokId])
-                ->with('success', 'Hewan ternak berhasil diperbarui dengan status pengurangan.');
+            ->with('success', 'Hewan ternak berhasil diperbarui dengan status pengurangan.');
         }
     
 
