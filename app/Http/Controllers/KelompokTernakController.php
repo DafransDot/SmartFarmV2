@@ -16,10 +16,10 @@ class KelompokTernakController extends Controller
     }
 
 
-    public function index()
+    public function halamanKelompokTernak()
     {
         $kelompokTernak = KelompokTernak::where('user_id', auth()->id())->get();
-        return view('kelompok_ternak.index', compact('kelompokTernak'));
+        return view('kelompok_ternak.HalamanKelompokTernak', compact('kelompokTernak'));
     }
     
     //fitur menambah kelompok

@@ -24,19 +24,19 @@
             </a>
         </li>
         <li class="hover:bg-gray-700 p-4">
-            <a href="{{ route('kelompok_ternak.index') }}" class="block">
+            <a href="{{ route('kelompok_ternak.halamanKelompokTernak') }}" class="block">
                 <i class="bi bi-sticky"></i>
                 <span class="sidebar-text">Mendata Ternak</span>
             </a>
         </li>
         <li class="hover:bg-gray-700 p-4">
-            <a href="{{ route('kesehatan_hewan.index') }}" class="block">
+            <a href="{{ route('kesehatan_hewan.halamanKesehatanHewanTernak') }}" class="block">
                 <i class="bi bi-heart-pulse"></i>
                 <span class="sidebar-text">Kesehatan Ternak</span>
             </a>
         </li>
         <li class="hover:bg-gray-700 p-4">
-            <a href="{{ route('laporan.index') }}" class="block">
+            <a href="{{ route('laporan.halamanLaporan') }}" class="block">
                 <i class="bi bi-journal-text"></i>
                 <span class="sidebar-text">Laporan</span>
             </a>

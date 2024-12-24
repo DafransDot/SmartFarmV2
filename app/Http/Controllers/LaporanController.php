@@ -13,7 +13,7 @@ class LaporanController extends Controller
      */
     public function halamanLaporan()
     {
-        return view('laporan.index');
+        return view('laporan.halamanLaporan');
     }
 
     /**
@@ -51,7 +51,7 @@ class LaporanController extends Controller
         }
 
         // Ambil data KelompokTernak beserta hewan ternaknya
-        $kelompokTernaks = KelompokTernak::with(['hewanTernak' => function ($query) use ($startDate) {
+        $kelompokTernak = KelompokTernak::with(['hewanTernak' => function ($query) use ($startDate) {
             $query->where(function ($query) use ($startDate) {
                 $query->where('created_at', '>=', $startDate)
                       ->orWhereNotNull('status_pengurangan'); 
@@ -78,13 +78,13 @@ class LaporanController extends Controller
               return $kelompok;
           });
 
-        if ($kelompokTernaks->isEmpty()) {
+        if ($kelompokTernak->isEmpty()) {
             return redirect()->back()
             ->with('error', 'Tidak ada data kelompok ternak untuk periode yang dipilih.');
         }
 
         // Buat PDF menggunakan view laporan
-        $pdf = Pdf::loadView('laporan.laporan-kelompok-ternak', compact('kelompokTernaks', 'periode'));
+        $pdf = Pdf::loadView('laporan.laporan-kelompok-ternak', compact('kelompokTernak', 'periode'));
 
         // Kembalikan file PDF untuk diunduh
         return $pdf->download('laporan_hewan_ternak_' . $periode . '.pdf');

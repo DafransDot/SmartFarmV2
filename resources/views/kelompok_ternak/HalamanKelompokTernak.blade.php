@@ -13,7 +13,7 @@
                 <div class="col">
                     <div class="card h-100 text-center border-0 shadow">
                         <button 
-                            onclick="location.href='{{ route('hewan_ternak.index', ['kelompok_id' => $kelompok->id]) }}'" 
+                            onclick="location.href='{{ route('hewan_ternak.HalamanHewanTernak', ['kelompok_id' => $kelompok->id]) }}'" 
                             class="btn btn-link p-0 kelompok-button">
                             <!-- Gambar Kelompok -->
                             <img 

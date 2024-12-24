@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class KesehatanController extends Controller
 {
-    public function index()
+    public function halamanKesehatanHewanTernak()
     {
-        return view('kesehatan_hewan.index');
+        return view('kesehatan_hewan.halamanKesehatanHewanTernak');
     }
 
     public function cariHewan(Request $request)

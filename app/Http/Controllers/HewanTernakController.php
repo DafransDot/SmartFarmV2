@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class HewanTernakController extends Controller
 {
     // Tampilkan daftar hewan ternak
-    public function index(Request $request)
+    public function halamanHewanTernak(Request $request)
     {
         $kelompokId = $request->get('kelompok_id');
         $query = HewanTernak::with('kelompokTernak')
@@ -26,10 +26,10 @@ class HewanTernakController extends Controller
 
         $query->orderByRaw("FIELD(status_penanganan, 'Belum Ditangani', 'Dalam Perawatan', 'Sembuh', '-')");
 
-        $hewanTernaks = $query->paginate(10);
-        $kelompokTernaks = KelompokTernak::where('user_id', auth()->id())->get();
+        $hewanTernak = $query->paginate(10);
+        $kelompokTernak = KelompokTernak::where('user_id', auth()->id())->get();
 
-        return view('hewan_ternak.index', compact('hewanTernaks', 'kelompokTernaks'));
+        return view('hewan_ternak.HalamanHewanTernak', compact('hewanTernak', 'kelompokTernak'));
     }
 
 
@@ -108,7 +108,7 @@ class HewanTernakController extends Controller
     
         $kelompokId = $request->input('id_kelompok');
     
-        return redirect()->route('hewan_ternak.index', ['kelompok_id' => $kelompokId])
+        return redirect()->route('hewan_ternak.HalamanHewanTernak', ['kelompok_id' => $kelompokId])
             ->with('success', 'Hewan ternak berhasil diperbarui.');
     }
 
@@ -125,7 +125,7 @@ class HewanTernakController extends Controller
             
             $kelompokId = $hewanTernak->id_kelompok;
             
-            return redirect()->route('hewan_ternak.index', ['kelompok_id' => $kelompokId])
+            return redirect()->route('hewan_ternak.HalamanHewanTernak', ['kelompok_id' => $kelompokId])
             ->with('success', 'Hewan ternak berhasil diperbarui dengan status pengurangan.');
         }
     

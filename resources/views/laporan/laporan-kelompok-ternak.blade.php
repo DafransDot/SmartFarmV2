@@ -70,7 +70,7 @@
 <div class="container my-5">
     <h1>Laporan Hewan Ternak</h1>
 
-    @foreach($kelompokTernaks as $kelompok)
+    @foreach($kelompokTernak as $kelompok)
         <div class="group-heading">
             <h2>Nama Kelompok: {{ $kelompok->nama_kelompok }}</h2>
             <p><strong>Nama Ketua:</strong> {{ $kelompok->nama_ketua }}</p>
