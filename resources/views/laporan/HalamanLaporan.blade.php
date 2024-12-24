@@ -6,16 +6,32 @@
 <div class="main-content">
     <h1 class="text-center mb-4">Laporan Hewan Ternak</h1>
 
-    <!-- Menampilkan pesan error jika ada -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <!-- Notifikasi -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+        <div id="successToast" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Berhasil</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('success') }}
+            </div>
         </div>
-    @endif
+
+        <!-- Notifikasi Error -->
+        <div id="errorToast" class="toast bg-danger text-white" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Terjadi Kesalahan</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
 
     <form action="{{ route('laporan.buatLaporan') }}" method="POST" class="laporan">
         @csrf
@@ -29,11 +45,24 @@
             </select>
         </div>
 
-        
-
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn" style="background-color: #256525; color: white;">Unduh</button>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Menampilkan Toast jika session 'success' ada
+        @if(session('success'))
+            var toastEl = document.getElementById('successToast');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        @elseif($errors->any())
+            var toastEl = document.getElementById('errorToast');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        @endif
+    });
+</script>
 @endsection

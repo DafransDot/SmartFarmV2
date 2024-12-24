@@ -78,13 +78,16 @@ class LaporanController extends Controller
               return $kelompok;
           });
 
+         // Jika data kosong, beri pesan error dan arahkan kembali
         if ($kelompokTernak->isEmpty()) {
             return redirect()->back()
-            ->with('error', 'Tidak ada data kelompok ternak untuk periode yang dipilih.');
+                ->withErrors(['error' => 'Tidak ada data kelompok ternak untuk periode yang dipilih.']);
         }
 
         // Buat PDF menggunakan view laporan
         $pdf = Pdf::loadView('laporan.laporan-kelompok-ternak', compact('kelompokTernak', 'periode'));
+
+        session()->flash('success', 'Laporan berhasil diunduh.');
 
         // Kembalikan file PDF untuk diunduh
         return $pdf->download('laporan_hewan_ternak_' . $periode . '.pdf');
