@@ -9,7 +9,6 @@ class KelompokTernak extends Model
 
 {
     use HasFactory;
-    protected $table = 'kelompok_ternaks';
     protected $fillable = [
         'nama_kelompok',
         'nama_ketua',

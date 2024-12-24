@@ -23,7 +23,6 @@ class KelompokTernakController extends Controller
     }
     
              //fitur menambah kelompok
-
     public function halamanTambahKelompok()
     {
         return view('kelompok_ternak.halamanTambahKelompok');
@@ -39,12 +38,9 @@ class KelompokTernakController extends Controller
         'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
     $path = $request->hasFile('foto') 
         ? $request->file('foto')->store('img/kelompok', 'public') 
         : 'img/kelompok/default-placeholder.png';
-
-
 
     KelompokTernak::create(
         [
@@ -60,7 +56,6 @@ class KelompokTernakController extends Controller
 
 
             //<-->fitur edit kelompok<-->//
-
     public function halamanEditKelompok(KelompokTernak $kelompokTernak)
     {
         return view('kelompok_ternak.halamanEditKelompok', compact('kelompokTernak'));
